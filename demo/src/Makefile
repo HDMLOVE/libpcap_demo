@@ -1,6 +1,6 @@
 cc=gcc
 
-target=capture_and_save_test read_pcap_test parse_pcap_pkt
+target=capture_and_save_test
 
 cflags=-Wall -g -I../include/ libpcap.a -ldbus-1 -ldl
 
