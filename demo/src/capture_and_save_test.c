@@ -79,16 +79,16 @@ int main(int argc, char* argv[])
 
 	g_pcap = handle;
 
-	// ±àÒë¹æÔò
+	// ç¼–è¯‘è§„åˆ™
 	struct bpf_program program;
 	//char bpf_buf[512] = "dst port 80 and dst port 443";
 	// char bpf_buf[512] = "tcp[tcpflags]=tcp-syn and (dst port 80 or dst port 443 )";
 	//char bpf_buf[512] = "tcp[tcpflags] & tcp-ack!=0";
-	// char bpf_buf[512] = "ip[2:2]>40 and (tcp[20:2]=0x4745 or tcp[20:2]=0x4854)"; // total_len > 40 ¶øÇÒ ¿ªÍ·ÊÇGE »òÕß HT
-	char bpf_buf[512] = "ip[2:2]>40 and (dst port 443 or dst port 80)"; // http ºÍ httpsµÄ°ü£¨²»°üº¬ÎÕÊÖ°ü)
-	// udp or (tcp and ip[2:2]>40) // udp °ü ºÍ tcp³¤¶È>0µÄ°ü£¨²»°üº¬ÎÕÊÖ°ü)
+	// char bpf_buf[512] = "ip[2:2]>40 and (tcp[20:2]=0x4745 or tcp[20:2]=0x4854)"; // total_len > 40 è€Œä¸” å¼€å¤´æ˜¯GE æˆ–è€… HT
+	char bpf_buf[512] = "ip[2:2]>40 and (dst port 443 or dst port 80)"; // http å’Œ httpsçš„åŒ…ï¼ˆä¸åŒ…å«æ¡æ‰‹åŒ…)
+	// udp or (tcp and ip[2:2]>40) // udp åŒ… å’Œ tcpé•¿åº¦>0çš„åŒ…ï¼ˆä¸åŒ…å«æ¡æ‰‹åŒ…)
 	
-	int optimize = 0; // ÊÇ·ñĞèÒªÓÅ»¯±í´ïÊ½
+	int optimize = 0; // æ˜¯å¦éœ€è¦ä¼˜åŒ–è¡¨è¾¾å¼
 	if (pcap_compile(handle, &program, bpf_buf, optimize, 0) != 0)
 	{
 		printf("pcap_compile failed, reason is %s\n", pcap_geterr(handle));
@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
 	printf("pcap_dump_open succeed!\n");
 
 	// pcap_dispatch(handle, -1, pcap_dump, dumper);
-	// pcap_dispatch(handle, 0, my_countme, dumper); // linux ÊµÏÖÖĞ£¬cntÃ»ÓĞÓÃ
+	// pcap_dispatch(handle, 0, my_countme, dumper); // linux å®ç°ä¸­ï¼Œcntæ²¡æœ‰ç”¨
 	pcap_loop(handle, 0, my_countme, dumper);
 	printf("pcap_dispatch over , reason is %s!\n", pcap_geterr(handle));
 	pcap_dump_flush(dumper);

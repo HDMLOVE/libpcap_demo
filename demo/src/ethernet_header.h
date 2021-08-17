@@ -13,73 +13,73 @@
 #endif
 
 
-//MacÍ·²¿£¬×Ü³¤¶È14×Ö½Ú
+//Macå¤´éƒ¨ï¼Œæ€»é•¿åº¦14å­—èŠ‚
 typedef struct _eth_hdr
 {
-	unsigned char dstmac[6]; //Ä¿±êmacµØÖ·
-	unsigned char srcmac[6]; //Ô´macµØÖ·
-	unsigned short eth_type; //ÒÔÌ«ÍøÀàĞÍ
+	unsigned char dstmac[6]; //ç›®æ ‡macåœ°å€
+	unsigned char srcmac[6]; //æºmacåœ°å€
+	unsigned short eth_type; //ä»¥å¤ªç½‘ç±»å‹
 }eth_hdr;
 
-//IPÍ·²¿£¬×Ü³¤¶È20×Ö½Ú
+//IPå¤´éƒ¨ï¼Œæ€»é•¿åº¦20å­—èŠ‚
 typedef struct _ip_hdr
 {
 #if LITTLE_ENDIAN
-	unsigned char ihl : 4;   //Ê×²¿³¤¶È
-	unsigned char version : 4; //°æ±¾ 
+	unsigned char ihl : 4;   //é¦–éƒ¨é•¿åº¦
+	unsigned char version : 4; //ç‰ˆæœ¬ 
 #else
-	unsigned char version : 4, //°æ±¾
-	unsigned char ihl : 4;   //Ê×²¿³¤¶È
+	unsigned char version : 4, //ç‰ˆæœ¬
+	unsigned char ihl : 4;   //é¦–éƒ¨é•¿åº¦
 #endif
-	unsigned char tos;   //·şÎñÀàĞÍ
-	unsigned short tot_len; //×Ü³¤¶È
-	unsigned short id;    //±êÖ¾
-	unsigned short frag_off; //·ÖÆ¬Æ«ÒÆ
-	unsigned char ttl;   //Éú´æÊ±¼ä
-	unsigned char protocol; //Ğ­Òé
-	unsigned short chk_sum; //¼ìÑéºÍ
-	struct in_addr srcaddr; //Ô´IPµØÖ·
-	struct in_addr dstaddr; //Ä¿µÄIPµØÖ·
+	unsigned char tos;   //æœåŠ¡ç±»å‹
+	unsigned short tot_len; //æ€»é•¿åº¦
+	unsigned short id;    //æ ‡å¿—
+	unsigned short frag_off; //åˆ†ç‰‡åç§»
+	unsigned char ttl;   //ç”Ÿå­˜æ—¶é—´
+	unsigned char protocol; //åè®®
+	unsigned short chk_sum; //æ£€éªŒå’Œ
+	struct in_addr srcaddr; //æºIPåœ°å€
+	struct in_addr dstaddr; //ç›®çš„IPåœ°å€
 }ip_hdr;
 
-//TCPÍ·²¿£¬×Ü³¤¶È20×Ö½Ú
+//TCPå¤´éƒ¨ï¼Œæ€»é•¿åº¦20å­—èŠ‚
 typedef struct _tcp_hdr
 {
-	unsigned short src_port;   //Ô´¶Ë¿ÚºÅ
-	unsigned short dst_port;   //Ä¿µÄ¶Ë¿ÚºÅ
-	unsigned int seq_no;    //ĞòÁĞºÅ
-	unsigned int ack_no;    //È·ÈÏºÅ
+	unsigned short src_port;   //æºç«¯å£å·
+	unsigned short dst_port;   //ç›®çš„ç«¯å£å·
+	unsigned int seq_no;    //åºåˆ—å·
+	unsigned int ack_no;    //ç¡®è®¤å·
 #if LITTLE_ENDIAN
-	unsigned char reserved_1 : 4; //±£Áô6Î»ÖĞµÄ4Î»Ê×²¿³¤¶È
-	unsigned char thl : 4;    //tcpÍ·²¿³¤¶È
-	unsigned char flag : 6;    //6Î»±êÖ¾
-	unsigned char reseverd_2 : 2; //±£Áô6Î»ÖĞµÄ2Î»
+	unsigned char reserved_1 : 4; //ä¿ç•™6ä½ä¸­çš„4ä½é¦–éƒ¨é•¿åº¦
+	unsigned char thl : 4;    //tcpå¤´éƒ¨é•¿åº¦
+	unsigned char flag : 6;    //6ä½æ ‡å¿—
+	unsigned char reseverd_2 : 2; //ä¿ç•™6ä½ä¸­çš„2ä½
 #else
-	unsigned char thl : 4;    //tcpÍ·²¿³¤¶È
-	unsigned char reserved_1 : 4; //±£Áô6Î»ÖĞµÄ4Î»Ê×²¿³¤¶È
-	unsigned char reseverd_2 : 2; //±£Áô6Î»ÖĞµÄ2Î»
-	unsigned char flag : 6;    //6Î»±êÖ¾ 
+	unsigned char thl : 4;    //tcpå¤´éƒ¨é•¿åº¦
+	unsigned char reserved_1 : 4; //ä¿ç•™6ä½ä¸­çš„4ä½é¦–éƒ¨é•¿åº¦
+	unsigned char reseverd_2 : 2; //ä¿ç•™6ä½ä¸­çš„2ä½
+	unsigned char flag : 6;    //6ä½æ ‡å¿— 
 #endif
-	unsigned short wnd_size;   //16Î»´°¿Ú´óĞ¡
-	unsigned short chk_sum;   //16Î»TCP¼ìÑéºÍ
-	unsigned short urgt_p;    //16Îª½ô¼±Ö¸Õë
+	unsigned short wnd_size;   //16ä½çª—å£å¤§å°
+	unsigned short chk_sum;   //16ä½TCPæ£€éªŒå’Œ
+	unsigned short urgt_p;    //16ä¸ºç´§æ€¥æŒ‡é’ˆ
 }tcp_hdr;
 
-//UDPÍ·²¿£¬×Ü³¤¶È8×Ö½Ú
+//UDPå¤´éƒ¨ï¼Œæ€»é•¿åº¦8å­—èŠ‚
 typedef struct _udp_hdr
 {
-	unsigned short src_port; //Ô¶¶Ë¿ÚºÅ
-	unsigned short dst_port; //Ä¿µÄ¶Ë¿ÚºÅ
-	unsigned short uhl;   //udpÍ·²¿³¤¶È
-	unsigned short chk_sum; //16Î»udp¼ìÑéºÍ
+	unsigned short src_port; 	//è¿œç«¯å£å·
+	unsigned short dst_port; 	//ç›®çš„ç«¯å£å·
+	unsigned short uhl;    		//udpå¤´éƒ¨é•¿åº¦
+	unsigned short chk_sum;	 	//16ä½udpæ£€éªŒå’Œ
 }udp_hdr;
 
-//ICMPÍ·²¿£¬×Ü³¤¶È4×Ö½Ú
+//ICMPå¤´éƒ¨ï¼Œæ€»é•¿åº¦4å­—èŠ‚
 typedef struct _icmp_hdr
 {
-	unsigned char icmp_type;   //ÀàĞÍ
-	unsigned char code;    //´úÂë
-	unsigned short chk_sum;   //16Î»¼ìÑéºÍ
+	unsigned char icmp_type;   //ç±»å‹
+	unsigned char code;    	   //ä»£ç 
+	unsigned short chk_sum;    //16ä½æ£€éªŒå’Œ
 }icmp_hdr;
 
 #endif // !Ethernet_Header
