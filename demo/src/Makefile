@@ -2,7 +2,7 @@ cc=gcc
 
 target=capture_and_save_test
 
-cflags=-Wall -g -I../include/ libpcap.a -ldbus-1 -ldl
+cflags=-Wall -g -I../include/ ../lib/libpcap.a -ldbus-1 -ldl
 
 all:$(target)
 	@echo "compile success"

@@ -30,7 +30,6 @@ uint8_t ring_buffer_delete(ring_buffer *ring_buffer_handle, uint32_t lenght)
 	return RING_BUFFER_SUCCESS;
 }
 
-
 uint8_t ring_buffer_write_byte(ring_buffer *ring_buffer_handle, uint32_t lenght)
 {
 	if(ring_buffer_handle->max_lenght - ring_buffer_
