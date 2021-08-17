@@ -4,11 +4,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <limits.h>
-#ifdef _WIN32
-#include "getopt.h"
-#else
 #include <unistd.h>
-#endif
 #include <errno.h>
 #include <sys/types.h>
 
@@ -165,7 +161,6 @@ err:
 	{
 		pcap_close(handle);
 	}
-
 
 	return res;
 }

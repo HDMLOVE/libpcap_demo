@@ -15,7 +15,6 @@ uint8_t ring_buffer_init(ring_bffer *ring_buffer_handle, uint8_t *buffer_addr, u
 		return RING_BUFFER_SUCCESS;
 }
 
-
 // 删除缓冲区中的数据
 uint8_t ring_buffer_delete(ring_buffer *ring_buffer_handle, uint32_t lenght)
 {
