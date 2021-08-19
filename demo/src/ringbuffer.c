@@ -6,7 +6,12 @@
 *******************************************/
 
 #include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <sys/types.h>
 #include <assert.h>
+#include <unistd.h>
+#include <sys/param.h>
 
 #include "ringbuffer.h"
 
@@ -123,8 +128,58 @@ const void *ringbuf_head(const struct ringbuf_t *rb)
     return rb->head;
 }
 
-static uint8_t *ringbuf_nextp(const struct ringbuf_t *rb)
+
+static uint8_t *ringbuf_nextp(ringbuf_t *rb, const uint8_t *p)
 {
     assert( (p>= rb->buf) && (p < ringbuf_end(rb)) );
     return rb->buf + ((++p - rb->buf) % ringbuf_buffer_size(rb));
+}
+
+size_t ringbuf_findchr(const struct ringbuf_t *rb, int c, size_t offset)
+{
+    const uint8_t *bufend = ringbuf_end(rb);
+    size_t bytes_used = ringbuf_bytes_uesd(rb);
+    if(offset >=  bytes_used)
+        return bytes_used;
+    const uint8_t *start = rb->buf + (((rb->tail - rb->buf) + offset) % ringbuf_buffer_size(rb));
+    assert(bufend > start);
+    size_t n = MIN(bufend - start, bytes_used - offset);
+    const uint8_t *found = memchr(start, c, n);
+    if (found)
+        return offset + (found - start);
+    else
+        return ringbuf_findchr(rb, c, offset + n);
+}
+
+size_t ringbuf_memset(ringbuf_t *dst, int c, size_t len);
+{
+    const uint8_t *bufend = ringbuf_end(dst);
+    size_t nwritten = 0;
+    size_t count = MIN(len, ringbuf_buffer_size(dst));
+    int overflow = count > ringbuf_bytes_free(dst);
+
+    while(nwritten != count)
+    {
+        assert(bufend > dst->head);
+        size_t n = MIN(bufend - dst->head, count - nwritten);
+        memset(dst->head, c, n);
+        dst->head += n;
+
+        /* wrap */
+        if(dst->head == bufend)
+            dst->head = dst->buf;
+    }
+    if(overflow){
+        dst->tail = ringbuf_nextp(dst, dst->head);
+        assert(ringbuf_is_full(dst));
+
+    }
+    return nwritten;
+}
+void ringbuf_memcpy_into(ringbuf_t dst, const void *src, size_t count)
+{
+    const uint8_t *u8src = src;
+    const uint8_t *bufend = ringbuf_end(dst);
+    int overflow = count > ringbuf_bytes_free(dst);
+    size_t nread = 0;
 }
